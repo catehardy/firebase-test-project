@@ -1,0 +1,25 @@
+GET https://us-central1-cate-test.cloudfunctions.net/helloDan HTTP/1.1
+
+###
+
+GET https://example.com/topics/1 HTTP/1.1
+
+###
+
+POST https://us-central1-cate-test.cloudfunctions.net/helloDan HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+###
+
+POST https://us-central1-cate-test.cloudfunctions.net/helloDan HTTP/1.1
+content-type: application/json
+
+{
+    "name": "test",
+    "time": "Wed, 21 Oct 2022 18:27:50 GMT"
+}
