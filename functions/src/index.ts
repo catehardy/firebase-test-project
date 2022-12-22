@@ -96,14 +96,22 @@ exports.insertFromPubsub = functions.pubsub.topic("environmental-sensors").onPub
   return admin.firestore().collection("environmentalSensors").add(sensorInfo);
 });
 
-
+// Function which listens for https requests to https://us-central1-cate-test.cloudfunctions.net/helloDan
+// POST requests can:
+// 1. add data to helloCate Firestore collection
+// 2. send a message to PubSub topic environmental-sensors
+// Reponds to all other request types with "405 - Method Not Allowed"
 export const helloCate = functions.https.onRequest(async (request, response) => {
   functions.logger.info("Hello " + JSON.stringify(request.body));
   const data = request.body;
   if (request.method == "POST") {
-    const name = data.name;
-    const time = data.time;
-    await admin.firestore().collection("helloCate").add({name, time});
+    const sensorName = data.sensorName;
+    const temperature = data.temperature;
+    const humidity = data.humidity;
+    await admin.firestore().collection("helloCate").add({sensorName, temperature, humidity});
+    await pubSubClient
+        .topic(environmentalSensors)
+        .publishMessage({attributes: {sensorName, temperature, humidity}, data: Buffer.from("Sensor 3 ready: ")});
     response.status(200).send("OK");
   } else {
     response.status(405).send("Method Not Allowed");

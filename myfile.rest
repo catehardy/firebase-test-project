@@ -14,8 +14,9 @@ POST https://us-central1-cate-test.cloudfunctions.net/helloCate HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample-2",
-    "time": "Wed, 22 Oct 2015 18:27:50 GMT"
+    "sensorName": "sensor-03",
+    "temperature": "74",
+    "humidity": "83"
 }
 
 ###
