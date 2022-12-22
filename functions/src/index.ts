@@ -52,11 +52,10 @@ export const helloDan = functions.https.onRequest(async (request, response) => {
   functions.logger.info("Request: ", request.method);
   if (request.method == "POST") {
     await publishMessageWithCustomAttributes().catch(console.error);
-    // add topicNameOrId func here!
-    // make this function async, to add publishing func?
+    response.send("Hi Dan, you have the correct number of cats");
     functions.logger.info("Hellooo " + request.body);
   } else {
-    publishMessageWithCustomAttributes().catch(console.error);
+    await publishMessageWithCustomAttributes().catch(console.error);
     response.send("Hello Dan - you have too many cats!");
   }
 });
