@@ -95,3 +95,18 @@ exports.insertFromPubsub = functions.pubsub.topic("environmental-sensors").onPub
 
   return admin.firestore().collection("environmentalSensors").add(sensorInfo);
 });
+
+
+export const helloCate = functions.https.onRequest(async (request, response) => {
+  functions.logger.info("Hello " + JSON.stringify(request.body));
+  const data = request.body;
+  if (request.method == "POST") {
+    const name = data.name;
+    const time = data.time;
+    await admin.firestore().collection("helloCate").add({name, time});
+    response.status(200).send("OK");
+  } else {
+    response.status(405).send("Method Not Allowed");
+  }
+});
+
